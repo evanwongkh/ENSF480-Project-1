@@ -17,6 +17,12 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
     private JButton loginButton;
     private JButton createButton;
     private JButton guestButton;
+    private JButton showtimeButton;
+
+    private Movies movieDB;
+    private ArrayList<String> movieList;
+    private ArrayList<String> showTimes;
+    private ArrayList<JButton> buttonList;
 
     public GUI() {
         
@@ -103,11 +109,28 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
 
     } 
 
-    private class searchListener implements ActionListener {    // When search button is pressed
+    private class movieListener implements ActionListener {    // When a movie is chosen
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("SEARCH");
+            JFrame frame = new JFrame();
+            JPanel panel = new JPanel();
+            frame.setSize(500, 300);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.add(panel);
+            panel.setLayout(new GridLayout(3, 2));
+            frame.setTitle("Available Showtimes");
+            frame.setVisible(true);
+
+            for(int i = 0; i < movieList.size(); i++) {
+                if(movieList.get(i).equals(e.getActionCommand())) {
+                    showtimeButton = new JButton(showTimes.get(i));
+                }
+            }
+            showtimeButton.setForeground(Color.BLACK);
+            showtimeButton.setBackground(Color.WHITE);
+            
+            panel.add(showtimeButton);
         }
     }
 
@@ -124,27 +147,34 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
 
         JFrame frame = new JFrame();
         JPanel panel = new JPanel();
-        frame.setSize(350, 200);
+        frame.setSize(500, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(panel);
-
-        panel.setLayout(null);
-
-
+        panel.setLayout(new GridLayout(3, 2));
         frame.setTitle(title);
         frame.setVisible(true);
 
-        JButton searchButton = new JButton("Search");
-        searchButton.setBounds(110, 130, 150, 25);
-        searchButton.setForeground(Color.BLACK);
-        searchButton.setBackground(Color.WHITE);
-        searchButton.addActionListener(new searchListener());
-        panel.add(searchButton);
+        movieDB = new Movies();
+        movieList = movieDB.getMovies();
+        showTimes = movieDB.getShowtimes();
+
+        buttonList = new ArrayList<JButton>();
+
+        for(int i = 0; i < movieList.size(); i++) {
+            
+            JButton movieButton = new JButton(movieList.get(i));
+            movieButton.setForeground(Color.BLACK);
+            movieButton.setBackground(Color.WHITE);
+            buttonList.add(movieButton);
+            panel.add(buttonList.get(i));
+            movieButton.addActionListener(new movieListener());
+
+        }
 
     }
                                 
     public static void main(String[] args) {
-        GUI gui = new GUI();
+        new GUI();
     }
 
 }

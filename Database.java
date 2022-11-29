@@ -16,7 +16,6 @@ public abstract class Database {
             this.databaseName = databaseName;
             connectionInfo += databaseName;
             Class.forName("com.mysql.cj.jdbc.Driver");
-            System.out.println(connectionInfo);
             jdbc_connection = DriverManager.getConnection(connectionInfo, login, password);
             myStmt = null;
         } 
