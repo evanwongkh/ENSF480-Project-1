@@ -14,24 +14,12 @@ import java.awt.event.*;
  */
 
 public class MainFrame {
-    private JFrame frame;
-    private JPanel panel;
-    private JLabel emailLabel;
-    private JTextField userText;
-    private JLabel passwordLabel;
-    private JPasswordField passwordField;
-    private JButton loginButton;
-    private JButton createButton;
-    private JButton guestButton;
-    private JButton showtimeButton;
     private JButton movieButton;
     private JButton resetButton;
     private int selectedSeats;
     private JButton payButton;
-    private boolean seats;
-    private Color hoverBackgroundColor;
-    private Color pressedBackgroundColor;
     List<JButton> buttonList = new ArrayList<JButton>();
+    List<String> selectedList = new ArrayList<String>();
 
     public MainFrame(){
        
@@ -46,7 +34,9 @@ public class MainFrame {
                     buttonList.get(j - 1).setBackground(Color.GRAY);
                     buttonList.get(j - 1).setText("TAKEN");
                     selectedSeats++;
+                    selectedList.add(e.getActionCommand());
                     System.out.println("Selected:" + selectedSeats);
+                    System.out.println("You selected seat: " + e.getActionCommand());
                 }
             }
             
@@ -57,7 +47,15 @@ public class MainFrame {
                 buttonList.get(a - 1).setText(String.valueOf(a));
                 }
                 selectedSeats = 0;
-                System.out.println("Selected:" + selectedSeats);
+                selectedList.clear();
+                System.out.println("YOU RESET Selected SEATS now it's at " + selectedSeats);
+            }
+
+            if(e.getActionCommand().equals("PAY")){
+                System.out.println("You selected these seats:");
+                for(int k = 0; k < selectedList.size(); k++){
+                    System.out.println(selectedList.get(k));
+                }
             }
 
         }
@@ -86,8 +84,7 @@ public class MainFrame {
         panel.add(payButton, BorderLayout.PAGE_END);
         panel.add(resetButton, BorderLayout.PAGE_END);
         resetButton.addActionListener(new movieListener());
-
-
+        payButton.addActionListener(new movieListener());
     }
 
     public static void main(String args[]){
