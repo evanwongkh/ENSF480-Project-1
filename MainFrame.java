@@ -56,6 +56,7 @@ public class MainFrame {
                 for(int k = 0; k < selectedList.size(); k++){
                     System.out.println(selectedList.get(k));
                 }
+                System.out.println("Your total price is: $" + selectedSeats*10);
             }
 
         }
