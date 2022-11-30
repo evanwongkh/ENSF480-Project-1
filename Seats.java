@@ -18,7 +18,7 @@ import java.awt.event.*;
 public class Seats {
 
     private int selectedSeats;
-    private String selectedMovie;
+    public String selectedMovie;
     private String selectedShowtime;
     private int amountDue;
     private JButton movieButton;

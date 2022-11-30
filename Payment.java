@@ -123,10 +123,30 @@ public class Payment {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            
+            JFrame frame = new JFrame();
+            frame.setSize(200, 200);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setLayout(new FlowLayout());
+            JLabel errorLabel = new JLabel("Payment completed for $" + totalCost + ". \n");
+            errorLabel.setBounds(10, 20, 50, 40);
+            frame.add(errorLabel);
+            frame.setVisible(true);
+            JButton returnButton = new JButton("Return to movie selection");
+            returnButton.setForeground(Color.BLACK);
+            returnButton.setBackground(Color.RED);
+            returnButton.addActionListener(new returnListener());
+            frame.add(returnButton);
             // GUI that shows payment complete
             // 
 
+        }
+    }
+
+    private class returnListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            
         }
     }
     

@@ -276,8 +276,6 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
         cancelButton.setBackground(Color.RED);
         cancelButton.addActionListener(new cancelListener());
         panel.add(cancelButton);
-
-
     }
                                 
     public static void main(String[] args) {
