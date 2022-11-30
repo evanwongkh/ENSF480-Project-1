@@ -24,6 +24,10 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
     private ArrayList<String> showTimes;
     private ArrayList<JButton> buttonList;
 
+    private String selectedMovie;
+    private String selectedShowtime;
+    private Seats seatsGUI;
+
     public GUI() {
         
         frame = new JFrame();
@@ -113,13 +117,14 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            selectedMovie = e.getActionCommand();
             JFrame frame = new JFrame();
             JPanel panel = new JPanel();
             frame.setSize(500, 300);
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.add(panel);
             panel.setLayout(new GridLayout(3, 2));
-            frame.setTitle("Available Showtimes");
+            frame.setTitle("Available Showtimes for " + selectedMovie);
             frame.setVisible(true);
 
             for(int i = 0; i < movieList.size(); i++) {
@@ -129,10 +134,12 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
             }
             showtimeButton.setForeground(Color.BLACK);
             showtimeButton.setBackground(Color.WHITE);
-            
+            showtimeButton.addActionListener(new showtimeListener());
             panel.add(showtimeButton);
         }
     }
+
+    
 
     private class guestListener implements ActionListener {     // When proceed as guest button is pressed
 
@@ -141,6 +148,15 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
             searchGUI("");
         }
 
+    }
+
+    private class showtimeListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            selectedShowtime = e.getActionCommand();
+            seatsGUI = new Seats(selectedMovie, selectedShowtime);
+        }
     }
 
     public void searchGUI(String title) {
