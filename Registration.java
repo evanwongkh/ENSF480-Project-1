@@ -1,10 +1,15 @@
 package All;
 import java.sql.*;
 import java.sql.SQLException;
+import javax.swing.*;
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
 
 public class Registration extends Database {
 
     private ResultSet result;
+    public int flag;
 
     public Registration() {
         super("theatre_app");
@@ -22,7 +27,11 @@ public class Registration extends Database {
         }
 
         catch (SQLException e) {
-            e.printStackTrace();
+            flag = 1;
+            System.out.println("User already exists");
+
+
+            //e.printStackTrace();
         }
 
     }

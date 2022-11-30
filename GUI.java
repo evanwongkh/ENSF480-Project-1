@@ -1,10 +1,8 @@
 package All;
 import javax.swing.*;
-
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
-
 
 public class GUI {        // Opens a GUI that prompts the user for the number of each client type until user has completed its inputs.
 
@@ -27,6 +25,8 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
     private String selectedMovie;
     private String selectedShowtime;
     private Seats seatsGUI;
+
+    private Payment annualPayment;
 
     public GUI() {
         
@@ -70,7 +70,7 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
         panel.add(createButton);
 
         guestButton = new JButton("Proceed as Guest");
-        guestButton.setBounds(110, 130, 150, 25);
+        guestButton.setBounds(100, 125, 165, 25);
         guestButton.setForeground(Color.BLACK);
         guestButton.setBackground(Color.WHITE);
         guestButton.addActionListener(new guestListener());
@@ -107,6 +107,23 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
             System.out.println(email + ", " + password);
             Registration newAccount = new Registration();
             newAccount.addUser(email, password);
+
+            if(newAccount.flag != 1) {
+
+                annualPayment = new Payment("Annual fee payment", 20);
+
+            }
+            else {
+                JFrame frame = new JFrame();
+                frame.setSize(350, 200);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setLayout(new FlowLayout());
+                JLabel errorLabel = new JLabel("ERROR: User already exists");
+                errorLabel.setBounds(10, 20, 50, 40);
+                frame.add(errorLabel);
+                frame.setVisible(true);
+
+            }
             // NEED TO ADD
             // After account is created
         }
@@ -186,6 +203,12 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
             movieButton.addActionListener(new movieListener());
 
         }
+
+        JButton cancelButton = new JButton("CANCEL ALL TICKETS");
+        cancelButton.setForeground(Color.BLACK);
+        cancelButton.setBackground(Color.RED);
+        panel.add(cancelButton);
+        
 
     }
                                 

@@ -27,6 +27,8 @@ public class Seats {
     List<JButton> buttonList = new ArrayList<JButton>();
     List<String> selectedList = new ArrayList<String>();
 
+    private Payment startPayment;
+
     public Seats(String m, String s){
         
         selectedMovie = m;
@@ -88,6 +90,7 @@ public class Seats {
             if(e.getActionCommand().equals("PAY")){     // When PAY button is clicked
                 // Call Payment() to initiate payment GUI
                 amountDue = selectedSeats * 10;
+                startPayment = new Payment("Pay for Tickets", amountDue);
                 System.out.println("You selected these seats:");
                 for(int k = 0; k < selectedList.size(); k++){
                     System.out.println(selectedList.get(k));
