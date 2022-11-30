@@ -12,6 +12,9 @@ public class Payment {
     private int totalCost;
     private JButton payButton;
 
+    private JFrame frame;
+    private JFrame paymentFrame;
+
     private JLabel emailLabel;
     private JLabel nameLabel;
     private JLabel cardNumberLabel;
@@ -32,52 +35,52 @@ public class Payment {
         payment = p;
         totalCost = cost;
 
-        JFrame frame = new JFrame();
+        paymentFrame = new JFrame();
         JPanel panel = new JPanel();
-        frame.setSize(320, 300);
+        paymentFrame.setSize(320, 300);
         //panel.setLayout(new FlowLayout());
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setLayout(new FlowLayout());
-        frame.setTitle(payment);
-        frame.add(panel);
-        frame.setResizable(false);
-        frame.setVisible(true);
+        paymentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        paymentFrame.setLayout(new FlowLayout());
+        paymentFrame.setTitle(payment);
+        paymentFrame.add(panel);
+        paymentFrame.setResizable(false);
+        paymentFrame.setVisible(true);
 
         emailLabel = new JLabel("Email");
         emailLabel.setBounds(10, 20, 50, 40);
-        frame.add(emailLabel);
+        paymentFrame.add(emailLabel);
 
         emailText = new JTextField(20);
         emailText.setBounds(200, 20, 165, 40);
-        frame.add(emailText);
+        paymentFrame.add(emailText);
 
         nameLabel = new JLabel("Cardholder Name");
         nameLabel.setBounds(10, 60, 100, 40);
-        frame.add(nameLabel);
+        paymentFrame.add(nameLabel);
 
         nameText = new JTextField(17);
         nameText.setBounds(200, 60, 165, 40);
-        frame.add(nameText);
+        paymentFrame.add(nameText);
 
         cardNumberLabel = new JLabel("Card Number");
         cardNumberLabel.setBounds(10, 90, 100, 40);
-        frame.add(cardNumberLabel);
+        paymentFrame.add(cardNumberLabel);
 
         cardNumberText = new JTextField(18);
         cardNumberText.setBounds(200, 90, 165, 40);
-        frame.add(cardNumberText);
+        paymentFrame.add(cardNumberText);
 
         cvvLabel = new JLabel("CVV");
         cvvLabel.setBounds(10, 120, 100, 40);
-        frame.add(cvvLabel);
+        paymentFrame.add(cvvLabel);
 
         cvvText = new JTextField(5);
         cvvText.setBounds(200, 120, 200, 40);
-        frame.add(cvvText);
+        paymentFrame.add(cvvText);
 
         expiryDateLabel = new JLabel("Expiry Date");
         expiryDateLabel.setBounds(10, 150, 100, 40);
-        frame.add(expiryDateLabel);
+        paymentFrame.add(expiryDateLabel);
 
         String[] months = {"1","2","3","4","5","6","7","8","9","10","11","12"};
         String[] years = {"22","23","24","25","26","27","28","29","30"};
@@ -89,13 +92,13 @@ public class Payment {
 
         dropDownMonth.addActionListener(new dropDownListener());
         dropDownYear.addActionListener(new dropDownListener());
-        frame.add(dropDownMonth, BorderLayout.CENTER);
-        frame.add(dropDownYear, BorderLayout.CENTER);
-        frame.setVisible(true);
+        paymentFrame.add(dropDownMonth, BorderLayout.CENTER);
+        paymentFrame.add(dropDownYear, BorderLayout.CENTER);
+        paymentFrame.setVisible(true);
 
         payButton = new JButton("Pay $" + totalCost);
         payButton.addActionListener(new payListener());
-        frame.add(payButton, BorderLayout.SOUTH);
+        paymentFrame.add(payButton, BorderLayout.SOUTH);
 
     }
 
@@ -123,7 +126,7 @@ public class Payment {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            JFrame frame = new JFrame();
+            frame = new JFrame();
             frame.setSize(200, 200);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLayout(new FlowLayout());
@@ -131,9 +134,9 @@ public class Payment {
             errorLabel.setBounds(10, 20, 50, 40);
             frame.add(errorLabel);
             frame.setVisible(true);
-            JButton returnButton = new JButton("Return to movie selection");
+            JButton returnButton = new JButton("Return");
             returnButton.setForeground(Color.BLACK);
-            returnButton.setBackground(Color.RED);
+            returnButton.setBackground(Color.WHITE);
             returnButton.addActionListener(new returnListener());
             frame.add(returnButton);
             // GUI that shows payment complete
@@ -146,7 +149,8 @@ public class Payment {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            
+            frame.dispose();
+            paymentFrame.dispose();
         }
     }
     

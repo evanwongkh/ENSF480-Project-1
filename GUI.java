@@ -17,6 +17,8 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
     private JButton guestButton;
     private JButton showtimeButton;
 
+    private JFrame showtimeFrame;
+
     private JButton noButton;
     private JLabel confirmLabel;
     private JLabel cancelLabel;
@@ -147,14 +149,14 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
         @Override
         public void actionPerformed(ActionEvent e) {
             selectedMovie = e.getActionCommand();
-            JFrame frame = new JFrame();
+            showtimeFrame = new JFrame();
             JPanel panel = new JPanel();
-            frame.setSize(500, 300);
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.add(panel);
+            showtimeFrame.setSize(500, 300);
+            showtimeFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            showtimeFrame.add(panel);
             panel.setLayout(new GridLayout(3, 2));
-            frame.setTitle("Available Showtimes for " + selectedMovie);
-            frame.setVisible(true);
+            showtimeFrame.setTitle("Available Showtimes for " + selectedMovie);
+            showtimeFrame.setVisible(true);
 
             for(int i = 0; i < movieList.size(); i++) {
                 if(movieList.get(i).equals(e.getActionCommand())) {
