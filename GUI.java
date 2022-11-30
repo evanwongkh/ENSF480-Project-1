@@ -17,6 +17,12 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
     private JButton guestButton;
     private JButton showtimeButton;
 
+    private JButton noButton;
+    private JLabel confirmLabel;
+    private JLabel cancelLabel;
+    private JButton yesButton;
+    private JButton okButton;
+
     private Movies movieDB;
     private ArrayList<String> movieList;
     private ArrayList<String> showTimes;
@@ -90,8 +96,14 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
                 searchGUI(email);
             }
             else {
-                System.out.println("no");
-                // Login false
+                JFrame frame = new JFrame();
+                frame.setSize(350, 200);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setLayout(new FlowLayout());
+                JLabel errorLabel = new JLabel("ERROR: Incorrect email or password");
+                errorLabel.setBounds(10, 20, 50, 40);
+                frame.add(errorLabel);
+                frame.setVisible(true);
             }
             
         }
@@ -176,6 +188,61 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
         }
     }
 
+    private class cancelListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JFrame frame = new JFrame();
+            yesButton = new JButton("YES");
+            noButton = new JButton("NO");
+            frame.setSize(300, 100);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setLayout(new FlowLayout());
+            frame.setTitle("joe");
+            frame.setResizable(false);
+            frame.setVisible(true);
+    
+            confirmLabel = new JLabel("Cancel your tickets?");
+            confirmLabel.setBounds(10, 20, 50, 40);
+            frame.add(confirmLabel);
+            frame.add(yesButton);
+            frame.add(noButton);
+            yesButton.addActionListener(new confirmListener());
+            noButton.addActionListener(new confirmListener());
+        }
+    }
+
+    private class confirmListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getActionCommand().equals(String.valueOf("YES"))){
+                JFrame frame = new JFrame();
+                okButton = new JButton("OK");
+                frame.setSize(300, 100);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setLayout(new FlowLayout());
+                frame.setTitle("joe");
+                frame.setResizable(false);
+                frame.setVisible(true);
+                cancelLabel = new JLabel("You've canceled your tickets.");
+                cancelLabel.setBounds(10, 20, 50, 40);
+                frame.add(cancelLabel);
+                frame.add(okButton);
+                okButton.addActionListener(new confirmListener());
+            }
+
+            if (e.getActionCommand().equals(String.valueOf("NO"))){
+                searchGUI("");
+            }
+
+            if (e.getActionCommand().equals(String.valueOf("OK"))){
+                System.exit(1);
+
+            }
+        }
+    }
+
     public void searchGUI(String title) {
 
         JFrame frame = new JFrame();
@@ -207,8 +274,9 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
         JButton cancelButton = new JButton("CANCEL ALL TICKETS");
         cancelButton.setForeground(Color.BLACK);
         cancelButton.setBackground(Color.RED);
+        cancelButton.addActionListener(new cancelListener());
         panel.add(cancelButton);
-        
+
 
     }
                                 
