@@ -1,0 +1,33 @@
+TO RUN THE PROGRAM MAKE A DATABASE CALLED theatre_app IN MYSQL AND MAKE A TABLE CALLED movies AND registration
+
+TO INITIALIZE DATABASE PUT THIS IN MYSQL AND RUN
+
+INSERT INTO movies (title, movieTime)
+VALUES
+('Black Adam', '12:00 AM'),
+('Black Panther: Wakanda Forever', '3:00 AM'),
+('Strange World', '6:00 AM'),
+('Bones and All', '9:00 AM'),
+('Devotion', '12:00 PM'),
+('The Menu', '3:00 PM'),
+('Avatar: The Way of Water', '6:00 PM'),
+('Puss In Boots: The Last Wish', '9:00 PM')
+
+
+THINGS COMPLETED:
+Graphical User Interface
+Using database such as MySQL, Oracle, SQL Server
+Search for movie
+Viewing show times
+User registration
+Browsing available seats
+Selecting seat from a seat map, by a mouse click on the available seat
+
+THINGS TO DO:
+Making payment for ticket
+Payment notification
+Ticket cancellation
+Cancellation confirmation
+Annual fee payment by registered users
+Matching between design and implementation
+Using of two design patterns
