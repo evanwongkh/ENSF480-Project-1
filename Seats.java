@@ -7,6 +7,9 @@ import java.util.*;
 import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.*;
+import java.sql.SQLException;
+
 
 /*
  * A grid of theatre seats made with buttons, once a button is pressed it's label will turn into taken,
@@ -15,22 +18,25 @@ import java.awt.event.*;
  * 
  */
 
-public class Seats {
+public class Seats extends Database{
 
     private int selectedSeats;
     public String selectedMovie;
-    private String selectedShowtime;
+    public String selectedShowtime;
     private int amountDue;
+    private String amountPrice;
+    private int ticketID;
     private JButton movieButton;
     private JButton resetButton;
     private JButton payButton;
+    public String totalSeats;
     List<JButton> buttonList = new ArrayList<JButton>();
     List<String> selectedList = new ArrayList<String>();
 
     private Payment startPayment;
 
     public Seats(String m, String s){
-        
+        super("theatre_app");
         selectedMovie = m;
         selectedShowtime = s;
 
@@ -61,6 +67,28 @@ public class Seats {
 
     }
 
+    public void addTicketInfo(String seatNumber, String movieName, String showTime, String price, int ticketID) {
+
+        String sql = "INSERT INTO ticketinfo (seat, movieBought, showTime, price, ticketID) VALUES (?,?,?,?,?)";
+        
+        try {
+            myStmt = jdbc_connection.prepareStatement(sql);
+            myStmt.setString(1, seatNumber);
+            myStmt.setString(2, movieName);
+            myStmt.setString(3, showTime);
+            myStmt.setString(4, price);
+            myStmt.setInt(5, ticketID);
+            myStmt.executeUpdate();
+        }
+
+        catch (SQLException e) {
+            System.out.println("User already exists");
+
+        }
+
+    }
+
+
     private class movieListener implements ActionListener {    // When a movie is chosen
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -89,6 +117,10 @@ public class Seats {
 
             if(e.getActionCommand().equals("PAY")){     // When PAY button is clicked
                 // Call Payment() to initiate payment GUI
+                String totalSeats = selectedList.get(0);
+                for(int g = 1; g < selectedList.size(); g++){
+                    totalSeats = totalSeats + ", " + selectedList.get(g);
+                }
                 amountDue = selectedSeats * 10;
                 startPayment = new Payment("Pay for Tickets", amountDue);
                 System.out.println("You selected these seats:");
@@ -96,8 +128,9 @@ public class Seats {
                     System.out.println(selectedList.get(k));
                 }
                 System.out.println("Your total price is: $" + amountDue);
+                amountPrice = Integer.toString(amountDue);
+                addTicketInfo(totalSeats, selectedMovie, selectedShowtime, amountPrice, ticketID);
             }
-
         }
     }
 

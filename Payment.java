@@ -1,16 +1,25 @@
 package All;
 
+import java.sql.*;
+import java.sql.SQLException;
 import javax.swing.*;
 import java.util.*;
 import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Payment {
+public class Payment extends Database {
 
     private String payment;
     private int totalCost;
+    private String expMonth;
+    private String expYear;
+    private String storedName;
+    private String storedCard;
+    private String storedEmail;
     private JButton payButton;
+    private String expComb;
+    private String storedCVV;
 
     private JFrame frame;
     private JFrame paymentFrame;
@@ -29,16 +38,15 @@ public class Payment {
     private JComboBox dropDownMonth;
     private JComboBox dropDownYear;
 
-
-    public Payment(String p, int cost) {
-
+    public Payment(String p, int cost){
+        super("theatre_app");
+        
         payment = p;
         totalCost = cost;
 
         paymentFrame = new JFrame();
         JPanel panel = new JPanel();
         paymentFrame.setSize(320, 300);
-        //panel.setLayout(new FlowLayout());
         paymentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         paymentFrame.setLayout(new FlowLayout());
         paymentFrame.setTitle(payment);
@@ -89,7 +97,6 @@ public class Payment {
         dropDownMonth.setPreferredSize(new Dimension(50, 30));
         dropDownYear.setPreferredSize(new Dimension(50, 30));
 
-
         dropDownMonth.addActionListener(new dropDownListener());
         dropDownYear.addActionListener(new dropDownListener());
         paymentFrame.add(dropDownMonth, BorderLayout.CENTER);
@@ -102,6 +109,26 @@ public class Payment {
 
     }
 
+    public void addPaymentInfo(String email, String name, String number, String cvv, String expiry) {
+
+        String sql = "INSERT INTO paymentinfo (email, name, number, cvv, expiry) VALUES (?,?,?,?,?)";
+        
+        try {
+            myStmt = jdbc_connection.prepareStatement(sql);
+            myStmt.setString(1, email);
+            myStmt.setString(2, name);
+            myStmt.setString(3, number);
+            myStmt.setString(4, cvv);
+            myStmt.setString(5, expiry);
+            myStmt.executeUpdate();
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     private class dropDownListener implements ActionListener {      // Drop down box listener
 
         @Override
@@ -109,13 +136,17 @@ public class Payment {
             if(e.getSource() == dropDownMonth){
                 String cardMonth = dropDownMonth.getSelectedItem().toString();
                 System.out.println("Month: " + cardMonth);
+                expMonth = cardMonth;
             }
 
             if(e.getSource() == dropDownYear){
                 String cardYear = dropDownYear.getSelectedItem().toString();
                 System.out.println("Year: " + cardYear);
+                expYear = cardYear;
 
             }
+
+            expComb = expMonth + "/" + expYear;
 
         }
 
@@ -125,6 +156,13 @@ public class Payment {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+
+            storedEmail = emailText.getText();
+            storedName = nameText.getText();
+            storedCard = cardNumberText.getText();
+            storedCVV = cvvText.getText();
+
+            addPaymentInfo(storedEmail, storedName, storedCard, storedCVV, expComb);
 
             frame = new JFrame();
             frame.setSize(200, 200);
