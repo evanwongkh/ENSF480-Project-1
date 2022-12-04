@@ -18,7 +18,8 @@ public class Ticket extends Database {
         super("theatre_app");
     }
 
-    public ArrayList<String> getTicketSeats() {
+    // Returns ArrayList<String> of seats from table ticketinfo
+    public ArrayList<String> getTicketSeats() {         
 
         try {
             Statement myStmt = jdbc_connection.createStatement();
@@ -33,6 +34,7 @@ public class Ticket extends Database {
         return seatList;
     }
 
+    // Returns ArrayList<String> of movie names from table ticketinfo
     public ArrayList<String> getTicketMovie() {
 
         try {
@@ -50,6 +52,7 @@ public class Ticket extends Database {
 
     }
 
+    // Returns ArrayList<String> of showtime from table ticketinfo
     public ArrayList<String> getTicketShowTime() {
         try {
             Statement myStmt = jdbc_connection.createStatement();
@@ -65,6 +68,7 @@ public class Ticket extends Database {
 
     }
 
+    // Returns ArrayList<String> of price from table ticketinfo
     public ArrayList<String> getTicketPrice() {
         try {
             Statement myStmt = jdbc_connection.createStatement();
@@ -80,6 +84,7 @@ public class Ticket extends Database {
 
     }
 
+    // Returns ArrayList<Integer> of ticketID from table ticketinfo
     public ArrayList<Integer> getTicketID() {
         try {
             Statement myStmt = jdbc_connection.createStatement();
@@ -95,6 +100,7 @@ public class Ticket extends Database {
 
     }
 
+    // Returns ArrayList<String> of price from table ticketinfo
     public String getRefundPrice(String id) {
 
         try {
@@ -113,6 +119,7 @@ public class Ticket extends Database {
         return ticketIDPrice;
     }
 
+    // Removes ticket information for the instance in ticketinfo that matches ticketID
     public void removeTicket(String id) {
 
         String sql = "DELETE FROM ticketinfo WHERE ticketID=" + id;

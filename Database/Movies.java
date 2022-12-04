@@ -9,7 +9,7 @@ public class Movies extends Database {
     private ArrayList<String> movieList = new ArrayList<>();
     private ArrayList<String> showtimeList = new ArrayList<>();
 
-
+    
     public Movies() {
         super("theatre_app");
     }

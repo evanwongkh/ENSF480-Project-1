@@ -56,7 +56,7 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
 
     private Payment annualPayment;
 
-    public GUI() {
+    public GUI() {      // Initializes login GUI
         
         frame = new JFrame();
         panel = new JPanel();
@@ -178,6 +178,7 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
             showtimeFrame.setTitle("Available Showtimes for " + selectedMovie);
             showtimeFrame.setVisible(true);
 
+            // Displays buttons with all showtimes on them
             for(int i = 0; i < movieList.size(); i++) {
                 if(movieList.get(i).equals(e.getActionCommand())) {
                     showtimeButton = new JButton(showTimes.get(i));
@@ -201,17 +202,17 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
 
     }
 
-    private class showtimeListener implements ActionListener {
+    private class showtimeListener implements ActionListener {      // When a showtime is chosen
 
         @Override
         public void actionPerformed(ActionEvent e) {
             selectedShowtime = e.getActionCommand();
             showtimeFrame.dispose();
-            seatsGUI = new Seats(selectedMovie, selectedShowtime);
+            seatsGUI = new Seats(selectedMovie, selectedShowtime);  // displays seats window
         }
     }
 
-    private class cancelTicketListener implements ActionListener {
+    private class cancelTicketListener implements ActionListener {      // When Cancel Tickets button is pressed
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -225,6 +226,7 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
             cancelFrame.setResizable(false);
             cancelFrame.setVisible(true);
 
+            // Obtains all ticket information from the database
             ticketDB = new Ticket();
             ticketSeatsList = ticketDB.getTicketSeats();
             ticketMovieList = ticketDB.getTicketMovie();
@@ -232,8 +234,8 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
             ticketPriceList = ticketDB.getTicketPrice();
             ticketIDList = ticketDB.getTicketID();
 
+            // Creates new window that displays all existing tickets as buttons
             buttonList = new ArrayList<JButton>();
-
             for(int i = 0; i < ticketSeatsList.size(); i++) {
                 
                 String buttonLabel = "Seats " + ticketSeatsList.get(i) + " for " + ticketMovieList.get(i) + " at "  + ticketshowTimeList.get(i) + " that cost $" + ticketPriceList.get(i) + "\n Ticket ID: " + ticketIDList.get(i);
@@ -256,11 +258,10 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
         }
     }
 
-    private class cancelListener implements ActionListener {
+    private class cancelListener implements ActionListener {        // When a cancel button is pressed
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
 
             System.out.println(e.getActionCommand().length());
             String cancelledTicket = e.getActionCommand().substring(e.getActionCommand().length() - 5);
@@ -268,7 +269,7 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
             String refundAmount = ticketDB.getRefundPrice(cancelledTicket);
             ticketDB.removeTicket(cancelledTicket);
 
-            if(validUser == true) {
+            if(validUser == true) { 
                 JOptionPane.showMessageDialog(null, "Refund of $" + refundAmount + " given.","Refund Notification", JOptionPane.INFORMATION_MESSAGE);
                 cancelFrame.dispose();
             }
@@ -284,38 +285,7 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
 
     }
 
-    private class confirmListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getActionCommand().equals(String.valueOf("YES"))){
-                JFrame frame = new JFrame();
-                okButton = new JButton("OK");
-                frame.setSize(300, 100);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setLayout(new FlowLayout());
-                frame.setTitle("joe");
-                frame.setResizable(false);
-                frame.setVisible(true);
-                cancelLabel = new JLabel("You've canceled your tickets.");
-                cancelLabel.setBounds(10, 20, 50, 40);
-                frame.add(cancelLabel);
-                frame.add(okButton);
-                okButton.addActionListener(new confirmListener());
-            }
-
-            if (e.getActionCommand().equals(String.valueOf("NO"))){
-                searchGUI("");
-            }
-
-            if (e.getActionCommand().equals(String.valueOf("OK"))){
-                System.exit(1);
-
-            }
-        }
-    }
-
-    public void searchGUI(String title) {
+    public void searchGUI(String title) {       // Displays the movies in movies table in the database
 
         movieFrame = new JFrame();
         JPanel panel = new JPanel();

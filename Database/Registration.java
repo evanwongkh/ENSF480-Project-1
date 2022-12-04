@@ -16,6 +16,7 @@ public class Registration extends Database {
         super("theatre_app");
     }
 
+    // Adds email and password into registration table
     public void addUser(String email, String password) {
 
         String sql = "INSERT INTO registration (email, password) VALUES (?,?)";
@@ -37,6 +38,7 @@ public class Registration extends Database {
 
     }
 
+    // Checks if email and password already exist in the theatre_app database
     public boolean validate(String email, String password) {
 
         boolean validUser = false;

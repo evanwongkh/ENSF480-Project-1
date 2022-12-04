@@ -10,6 +10,7 @@ public abstract class Database {
 	protected String login = "root";
 	protected String password = "password";
     
+    // Initializes connection to theatre_app database
     public Database(String databaseName) {
 
         try {
