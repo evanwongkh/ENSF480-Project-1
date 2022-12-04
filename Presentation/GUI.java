@@ -298,7 +298,7 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            String cancelledTicket = e.getActionCommand().substring(e.getActionCommand().length() - 5);
+            String cancelledTicket = e.getActionCommand().substring(e.getActionCommand().length() - 1);
             String refundAmount = ticketDB.getRefundPrice(cancelledTicket);
             ticketDB.removeTicket(cancelledTicket);
 

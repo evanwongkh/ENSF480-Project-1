@@ -30,7 +30,7 @@ public class Seats extends Database{
     public String selectedShowtime;
     private int amountDue;
     private String amountPrice;
-    private int ticketID = 10000;
+    private int ticketID;
     private JButton movieButton;
     private JButton resetButton;
     private JButton payButton;
@@ -82,13 +82,13 @@ public class Seats extends Database{
             myStmt.setString(2, movieName);
             myStmt.setString(3, showTime);
             myStmt.setString(4, price);
-            myStmt.setInt(5, ticketID);
+            myStmt.setInt(5, 0);
             myStmt.executeUpdate();
         }
 
         catch (SQLException e) {
             System.out.println("User already exists");
-
+            e.printStackTrace();
         }
 
     }
@@ -122,7 +122,6 @@ public class Seats extends Database{
 
             if(e.getActionCommand().equals("PAY")){     // When PAY button is clicked
                 seatsFrame.dispose();
-                ticketID++;
                 // Call Payment() to initiate payment GUI
                 String totalSeats = selectedList.get(0);
                 for(int g = 1; g < selectedList.size(); g++){
