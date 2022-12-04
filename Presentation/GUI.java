@@ -163,6 +163,52 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
         }
 
     } 
+    
+    private class guestListener implements ActionListener {     // When proceed as guest button is pressed
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            searchGUI("");
+        }
+
+    }
+
+    public void searchGUI(String title) {       // Displays the movies in movies table in the database
+
+        movieFrame = new JFrame();
+        JPanel panel = new JPanel();
+        movieFrame.setSize(500, 300);
+        movieFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        movieFrame.add(panel);
+        panel.setLayout(new GridLayout(3, 2));
+        movieFrame.setTitle(title);
+        movieFrame.setVisible(true);
+
+        // Retrieve list of movies and showtimes from database
+        movieDB = new Movies();
+        movieList = movieDB.getMovies();
+        showTimes = movieDB.getShowtimes();
+
+        buttonList = new ArrayList<JButton>();
+
+        // Loop to display movies in GUI to user
+        for(int i = 0; i < movieList.size(); i++) {             
+            
+            JButton movieButton = new JButton(movieList.get(i));
+            movieButton.setForeground(Color.BLACK);
+            movieButton.setBackground(Color.WHITE);
+            buttonList.add(movieButton);
+            panel.add(buttonList.get(i));
+            movieButton.addActionListener(new movieListener());
+
+        }
+
+        JButton cancelButton = new JButton("Cancel Tickets");
+        cancelButton.setForeground(Color.BLACK);
+        cancelButton.setBackground(Color.RED);
+        cancelButton.addActionListener(new cancelTicketListener());
+        panel.add(cancelButton);
+    }
 
     private class movieListener implements ActionListener {    // When a movie is chosen
 
@@ -189,17 +235,6 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
             showtimeButton.addActionListener(new showtimeListener());
             panel.add(showtimeButton);
         }
-    }
-
-    
-
-    private class guestListener implements ActionListener {     // When proceed as guest button is pressed
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            searchGUI("");
-        }
-
     }
 
     private class showtimeListener implements ActionListener {      // When a showtime is chosen
@@ -263,9 +298,7 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            System.out.println(e.getActionCommand().length());
             String cancelledTicket = e.getActionCommand().substring(e.getActionCommand().length() - 5);
-            System.out.println(cancelledTicket);
             String refundAmount = ticketDB.getRefundPrice(cancelledTicket);
             ticketDB.removeTicket(cancelledTicket);
 
@@ -283,41 +316,6 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
 
         }
 
-    }
-
-    public void searchGUI(String title) {       // Displays the movies in movies table in the database
-
-        movieFrame = new JFrame();
-        JPanel panel = new JPanel();
-        movieFrame.setSize(500, 300);
-        movieFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        movieFrame.add(panel);
-        panel.setLayout(new GridLayout(3, 2));
-        movieFrame.setTitle(title);
-        movieFrame.setVisible(true);
-
-        movieDB = new Movies();
-        movieList = movieDB.getMovies();
-        showTimes = movieDB.getShowtimes();
-
-        buttonList = new ArrayList<JButton>();
-
-        for(int i = 0; i < movieList.size(); i++) {
-            
-            JButton movieButton = new JButton(movieList.get(i));
-            movieButton.setForeground(Color.BLACK);
-            movieButton.setBackground(Color.WHITE);
-            buttonList.add(movieButton);
-            panel.add(buttonList.get(i));
-            movieButton.addActionListener(new movieListener());
-
-        }
-
-        JButton cancelButton = new JButton("Cancel Tickets");
-        cancelButton.setForeground(Color.BLACK);
-        cancelButton.setBackground(Color.RED);
-        cancelButton.addActionListener(new cancelTicketListener());
-        panel.add(cancelButton);
     }
                                 
     public static void main(String[] args) {

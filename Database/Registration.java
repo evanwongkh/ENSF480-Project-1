@@ -18,7 +18,6 @@ public class Registration extends Database {
 
     // Adds email and password into registration table
     public void addUser(String email, String password) {
-
         String sql = "INSERT INTO registration (email, password) VALUES (?,?)";
         
         try {
