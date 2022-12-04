@@ -26,6 +26,7 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
     private JFrame showtimeFrame;
 
     private JFrame cancelFrame;
+    private JFrame movieFrame;
 
     private boolean validUser;
 
@@ -205,6 +206,7 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
         @Override
         public void actionPerformed(ActionEvent e) {
             selectedShowtime = e.getActionCommand();
+            showtimeFrame.dispose();
             seatsGUI = new Seats(selectedMovie, selectedShowtime);
         }
     }
@@ -216,7 +218,7 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
             cancelFrame = new JFrame();
             JPanel panel = new JPanel();
             cancelFrame.setSize(500, 300);
-            cancelFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            cancelFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             panel.setLayout(new GridLayout(3, 2));
             cancelFrame.add(panel);
             cancelFrame.setTitle("Cancel Tickets");
@@ -267,13 +269,13 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
             ticketDB.removeTicket(cancelledTicket);
 
             if(validUser == true) {
-                JOptionPane.showMessageDialog(null, "Refund of " + refundAmount + "given.","Message", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Refund of $" + refundAmount + " given.","Refund Notification", JOptionPane.INFORMATION_MESSAGE);
                 cancelFrame.dispose();
             }
 
             else {
                 int unregistered = Integer.valueOf(refundAmount);
-                JOptionPane.showMessageDialog(null, "Refund of $" + unregistered * 0.85 + " given.","Message", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Refund of $" + unregistered * 0.85 + " given.","Refund Notification", JOptionPane.INFORMATION_MESSAGE);
                 cancelFrame.dispose();
 
             }
@@ -315,14 +317,14 @@ public class GUI {        // Opens a GUI that prompts the user for the number of
 
     public void searchGUI(String title) {
 
-        JFrame frame = new JFrame();
+        movieFrame = new JFrame();
         JPanel panel = new JPanel();
-        frame.setSize(500, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(panel);
+        movieFrame.setSize(500, 300);
+        movieFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        movieFrame.add(panel);
         panel.setLayout(new GridLayout(3, 2));
-        frame.setTitle(title);
-        frame.setVisible(true);
+        movieFrame.setTitle(title);
+        movieFrame.setVisible(true);
 
         movieDB = new Movies();
         movieList = movieDB.getMovies();

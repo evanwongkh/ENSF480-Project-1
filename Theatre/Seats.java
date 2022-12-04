@@ -23,6 +23,8 @@ import java.sql.SQLException;
 
 public class Seats extends Database{
 
+    private JFrame seatsFrame;
+
     private int selectedSeats;
     public String selectedMovie;
     public String selectedShowtime;
@@ -43,17 +45,17 @@ public class Seats extends Database{
         selectedMovie = m;
         selectedShowtime = s;
 
-        JFrame frame = new JFrame();
+        seatsFrame = new JFrame();
         JPanel panel = new JPanel();
         payButton = new JButton("PAY");
         resetButton = new JButton("RESET");
-        frame.setSize(600, 300);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.add(panel);
+        seatsFrame.setSize(600, 300);
+        seatsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        seatsFrame.add(panel);
         panel.setLayout(new GridLayout(5, 5));
-        frame.setTitle("Available Seats for " + selectedMovie + " at " + selectedShowtime);
-        frame.setResizable(false);
-        frame.setVisible(true);
+        seatsFrame.setTitle("Available Seats for " + selectedMovie + " at " + selectedShowtime);
+        seatsFrame.setResizable(false);
+        seatsFrame.setVisible(true);
 
         for(int i = 1; i < 17; i++) {
             movieButton = new JButton(String.valueOf(i));
@@ -119,6 +121,7 @@ public class Seats extends Database{
             }
 
             if(e.getActionCommand().equals("PAY")){     // When PAY button is clicked
+                seatsFrame.dispose();
                 ticketID++;
                 // Call Payment() to initiate payment GUI
                 String totalSeats = selectedList.get(0);
